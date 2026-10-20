@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CampusLite – Learning Without Limits</title>
+<meta name="theme-color" content="#2563EB">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+:root{--p:#2563EB;--pd:#1D4ED8;--tx:#0F172A;--t2:#64748B;--bg:#F8FAFC;--sf:#fff;--bd:#E2E8F0;--ok:#16A34A;--wa:#B45309;--er:#DC2626;--fs:16px;--r:14px}
+*{box-sizing:border-box}
+body{margin:0;font:var(--fs)/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx);padding-bottom:84px}
+h1,h2,h3{line-height:1.25;margin:0 0 .5rem}h1{font-size:2rem}h2{font-size:1.4rem}h3{font-size:1.1rem}p{margin:0 0 .8rem}
+a{color:var(--p)}
+:focus-visible{outline:3px solid #F59E0B;outline-offset:2px}
+.wrap{max-width:1000px;margin:0 auto;padding:16px}
+header.top{background:var(--sf);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:5}
+header.top .wrap{display:flex;align-items:center;gap:12px;padding:10px 16px}
+.logo{font-weight:800;font-size:1.25rem;color:var(--p);text-decoration:none;display:flex;gap:8px;align-items:center}
+.logo img{width:28px;height:28px}
+.status{margin-left:auto;font-size:.9rem;font-weight:600;padding:4px 12px;border-radius:99px;border:1px solid var(--bd);display:flex;align-items:center;gap:6px}
+.status.on{color:var(--ok);background:#F0FDF4}.status.off{color:var(--wa);background:#FFFBEB}
+nav.main{position:fixed;bottom:0;left:0;right:0;background:var(--sf);border-top:1px solid var(--bd);display:flex;z-index:9}
+nav.main a{flex:1;text-align:center;padding:8px 2px;min-height:60px;text-decoration:none;color:var(--t2);font-size:.75rem;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center}
+nav.main a span{font-size:1.3rem}nav.main a[aria-current=page]{color:var(--p);background:#EFF6FF}
+@media(min-width:760px){body{padding-bottom:0}nav.main{position:static;border:0;background:none;order:2;margin-left:16px;gap:4px}nav.main a{flex:none;flex-direction:row;gap:6px;font-size:.95rem;padding:8px 14px;min-height:44px;border-radius:10px}nav.main a span{font-size:1rem}header.top .wrap{flex-wrap:nowrap}.status{order:3}}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:16px;transition:box-shadow .2s,transform .2s}
+.card:hover{box-shadow:0 4px 14px rgba(15,23,42,.08)}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.stats{display:grid;gap:12px;grid-template-columns:repeat(3,1fr);margin:16px 0}
+.stat{text-align:center;padding:12px 6px}.stat b{display:block;font-size:1.6rem;color:var(--p)}.stat small{color:var(--t2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:10px 18px;border-radius:10px;border:1px solid var(--p);background:var(--p);color:#fff;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s}
+.btn:hover{background:var(--pd)}.btn.sec{background:#fff;color:var(--p)}.btn.sec:hover{background:#EFF6FF}.btn.dng{background:#fff;color:var(--er);border-color:var(--er)}.btn.sm{min-height:40px;padding:6px 12px;font-size:.9rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-block;font-size:.8rem;font-weight:600;padding:2px 10px;border-radius:99px;background:#F1F5F9;color:var(--t2)}.badge.ok{background:#DCFCE7;color:#166534}
+.muted{color:var(--t2)}.ic{font-size:1.8rem}
+input[type=search],input[type=text],select{width:100%;min-height:48px;padding:10px 14px;border:1px solid var(--bd);border-radius:10px;font:inherit;background:#fff;color:var(--tx)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.chip{min-height:40px;padding:6px 16px;border-radius:99px;border:1px solid var(--bd);background:#fff;font:inherit;cursor:pointer;color:var(--tx)}.chip[aria-pressed=true]{background:var(--p);color:#fff;border-color:var(--p)}
+.hero{text-align:center;padding:32px 0}.hero p.lead{font-size:1.15rem;color:var(--t2);max-width:560px;margin:0 auto 20px}
+.tip{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--r);padding:12px 16px;margin-bottom:14px}
+.empty{text-align:center;padding:32px 16px;color:var(--t2)}
+.reader{max-width:700px;margin:0 auto;font-size:1.05em;line-height:1.8}
+.reader pre{background:#0F172A;color:#E2E8F0;padding:14px;border-radius:10px;overflow-x:auto;font-size:.9em;line-height:1.5}
+.reader .q{background:#FFFBEB;border-left:4px solid #F59E0B;padding:10px 14px;border-radius:6px;margin-bottom:.8rem}
+body.dark .reader{background:#0F172A;color:#E2E8F0;padding:20px;border-radius:var(--r)}body.dark .reader pre{background:#020617}body.dark .reader .q{background:#1E293B}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:90px;background:var(--tx);color:#fff;padding:10px 18px;border-radius:10px;z-index:20;max-width:90%;display:none}
+@media(min-width:760px){#toast{bottom:24px}}
+.steps{counter-reset:s}.steps .card b.n{color:var(--p);font-size:1.5rem}
+table{width:100%;border-collapse:collapse;font-size:.95rem}th,td{border:1px solid var(--bd);padding:8px;text-align:left}th{background:#F1F5F9}
+.tbl{overflow-x:auto}
+dialog{border:1px solid var(--bd);border-radius:var(--r);max-width:400px;padding:20px}
+body.saver *,body.saver *::before{transition:none!important;animation:none!important}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+.sr{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<a class="sr" href="#app" onfocus="this.style.left=0">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="logo" href="#/dashboard"><img src="icon.svg" alt="">CampusLite</a>
+<nav class="main" id="nav" aria-label="Main"></nav>
+<div class="status on" id="status" role="status">● Online</div>
+</div></header>
+<main id="app" class="wrap" tabindex="-1"></main>
+<div id="toast" role="status" aria-live="polite"></div>
+<dialog id="dlg"><p id="dlgmsg"></p><div class="row"><button class="btn dng" id="dlgyes">Yes, remove</button><button class="btn sec" id="dlgno">Keep it</button></div></dialog>
+<script>
+"use strict";
+/* ---------- Study notes (bundled, ~genuine content) ---------- */
+const N=[
+{id:"prog",t:"Introduction to Programming",cat:"Programming",type:"Study Notes",ic:"💻",d:"Learn variables, algorithms, loops, and basic programming concepts.",b:[
+["h","Variables"],["p","A variable is a named box that stores a value. You can change the value later."],["c","age = 18\nname = \"Thandi\"\nage = age + 1   # now 19"],
+["h","Loops"],["p","A loop repeats instructions. Use it instead of copying the same line many times."],["c","for i in range(1, 4):\n    print(\"Step\", i)"],
+["h","Algorithms"],["p","An algorithm is a clear list of steps that solves a problem, e.g. finding the largest number in a list: start with the first number, compare each next one, keep the bigger."],
+["q","Practice: write a loop that prints the numbers 1 to 10. What does age = age + 1 do?"]]},
+{id:"math",t:"Mathematics Essentials",cat:"Mathematics",type:"Study Notes",ic:"➗",d:"Fractions, percentages and solving simple equations step by step.",b:[
+["h","Percentages"],["p","Percent means 'out of 100'. To find 15% of 80: 80 × 15 ÷ 100 = 12."],
+["h","Solving equations"],["p","Do the same operation to both sides until x is alone."],["c","2x + 5 = 17\n2x = 12      (subtract 5)\nx = 6        (divide by 2)"],
+["h","Fractions"],["p","To add fractions, use a common denominator: 1/2 + 1/3 = 3/6 + 2/6 = 5/6."],
+["q","Practice: find 20% of 150. Solve 3x − 4 = 11."]]},
+{id:"sys",t:"Computer Systems Basics",cat:"Computing",type:"Study Notes",ic:"🖥️",d:"How hardware, software, memory and storage work together.",b:[
+["h","The main parts"],["p","The CPU runs instructions. RAM is fast, temporary memory that clears when power is off. Storage (SSD or hard drive) keeps files permanently."],
+["h","Operating system"],["p","The operating system (Windows, Android, Linux) manages hardware and lets programs share the CPU, memory and files."],
+["h","Binary"],["p","Computers store everything as 0s and 1s. 8 bits make 1 byte. 1 KB ≈ 1000 bytes."],["c","101 (binary) = 4 + 0 + 1 = 5"],
+["q","Practice: why is RAM called temporary? Convert binary 1100 to decimal."]]},
+{id:"web",t:"Web Development Starter",cat:"Programming",type:"Tutorial",ic:"🌐",d:"Build your first web page with HTML and CSS.",b:[
+["h","HTML is structure"],["p","HTML uses tags to describe content: headings, paragraphs, links and images."],["c","<h1>My Page</h1>\n<p>Hello, world!</p>\n<a href=\"about.html\">About</a>"],
+["h","CSS is style"],["p","CSS controls colours, spacing and layout."],["c","h1 { color: royalblue; }\np  { font-size: 18px; }"],
+["h","Tip"],["p","Save your file as index.html and open it in a browser. No internet needed."],
+["q","Practice: make a page with your name as a heading and a paragraph about your course."]]},
+{id:"db",t:"Database Fundamentals",cat:"Computing",type:"Study Notes",ic:"🗄️",d:"Tables, keys and basic SQL queries.",b:[
+["h","Tables, rows and columns"],["p","A database stores data in tables. Each row is one record; each column is one property. A primary key uniquely identifies each row."],
+["h","Basic SQL"],["c","SELECT name, course\nFROM students\nWHERE year = 2\nORDER BY name;"],["p","SELECT picks columns, FROM names the table, WHERE filters rows."],
+["h","Relationships"],["p","A foreign key links one table to another, e.g. each enrolment row points to a student id."],
+["q","Practice: write a query to list all students in year 3. Why do we need a primary key?"]]},
+{id:"biz",t:"Business Communication",cat:"Business",type:"Guide",ic:"📧",d:"Write clear emails, reports and short presentations.",b:[
+["h","Clear emails"],["p","Use a specific subject line, greet politely, state your purpose in the first sentence, and end with the action you need."],["c","Subject: Request for extension – Assignment 2\nDear Mr Moyo,\nI am writing to ask for a 2-day extension...\nKind regards,\nThandi"],
+["h","Reports"],["p","A good report has: title, summary, findings, conclusion, recommendations. Keep paragraphs short."],
+["h","Presenting"],["p","One idea per slide, large text, and practise out loud."],
+["q","Practice: rewrite the subject line 'Help' into a clearer one. List the five parts of a report."]]}
+];
+const CATS=["All","Programming","Mathematics","Computing","Business"];
+const TIPS=["Save what you need while on Wi-Fi, then study offline.","Use Data Saver to avoid unnecessary refreshes.","Study in short 25-minute blocks with 5-minute breaks.","Write your own summary after each note.","Ask classmates to share files you can upload to My Downloads."];
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+const fmt=b=>b<1024?b+" B":b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(1)+" MB";
+const S={saved:[],files:[],online:navigator.onLine,idb:true};
+let toastT;function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";clearTimeout(toastT);toastT=setTimeout(()=>t.style.display="none",3500)}
+const sizeOf=n=>new Blob([JSON.stringify(n)]).size;
+const isSaved=id=>S.saved.some(x=>x.id===id);
+
+/* ---------- IndexedDB ---------- */
+let DB=null;
+function openDB(){return new Promise((res,rej)=>{if(!window.indexedDB)return rej(new Error("noidb"));const r=indexedDB.open("campuslite",1);
+r.onupgradeneeded=()=>{const d=r.result;d.createObjectStore("saved",{keyPath:"id"});d.createObjectStore("files",{keyPath:"id"});d.createObjectStore("kv")};
+r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+function tx(store,mode,fn){return new Promise((res,rej)=>{const t=DB.transaction(store,mode);const q=fn(t.objectStore(store));t.oncomplete=()=>res(q&&q.result);t.onerror=t.onabort=()=>rej(t.error)})}
+async function load(){S.saved=await tx("saved","readonly",s=>s.getAll());S.files=await tx("files","readonly",s=>s.getAll())}
+const quotaMsg=e=>e&&e.name==="QuotaExceededError"?"Your device is running low on storage. Remove something from My Downloads and try again.":"Something went wrong saving that. Please try again.";
+
+/* ---------- actions ---------- */
+async function saveNote(id){const n=N.find(x=>x.id===id);if(!S.idb)return toast("Saving isn't available in this browser. You can still read online.");
+try{await tx("saved","readwrite",s=>s.put({id,note:n,size:sizeOf(n),at:Date.now()}));await load();toast("Saved! You can now read this offline.");route()}catch(e){toast(quotaMsg(e))}}
+function confirmDel(msg){return new Promise(r=>{const d=$("#dlg");$("#dlgmsg").textContent=msg;const done=v=>{d.close();r(v)};$("#dlgyes").onclick=()=>done(true);$("#dlgno").onclick=()=>done(false);d.showModal?d.showModal():r(confirm(msg))})}
+async function removeItem(store,id){if(!await confirmDel("Remove this from your downloads? You can save it again later."))return;
+try{await tx(store,"readwrite",s=>s.delete(id));await load();toast("Removed from your downloads.");route()}catch(e){toast(quotaMsg(e))}}
+function recent(id){const r=ls.get("recent",[]).filter(x=>x!==id);r.unshift(id);ls.set("recent",r.slice(0,4))}
+
+/* ---------- views ---------- */
+const NAV=[["dashboard","🏠","Dashboard"],["resources","📚","Resources"],["downloads","⬇️","My Downloads"],["campus","🏫","Campus Hub"],["settings","⚙️","Settings"]];
+function card(n){const s=isSaved(n.id);return `<article class="card"><div class="row"><span class="ic" aria-hidden="true">${n.ic}</span><span class="badge">${n.type}</span><span class="badge">~${fmt(sizeOf(n))}</span></div>
+<h3>${esc(n.t)}</h3><p class="muted">${esc(n.d)}</p><div class="row">${s?'<span class="badge ok">✔ Available Offline</span>':'<span class="badge">Online only</span>'}</div>
+<div class="row" style="margin-top:10px">${s?`<a class="btn" href="#/read/${n.id}">Open Resource</a>`:`<button class="btn" data-save="${n.id}">Save for Offline</button><a class="btn sec" href="#/read/${n.id}">Read</a>`}</div></article>`}
+function stats(){let b=0;S.saved.forEach(x=>b+=x.size);S.files.forEach(x=>b+=x.blob.size);return `<div class="stats"><div class="card stat"><b>${N.length}</b><small>Resources available</small></div><div class="card stat"><b>${S.saved.length+S.files.length}</b><small>Saved for offline</small></div><div class="card stat"><b>${fmt(b)}</b><small>Storage used</small></div></div>`}
+const V={};
+V.welcome=()=>`<section class="hero"><h1>No Wi-Fi? No Problem.</h1><p class="lead">Save your study materials once and keep learning wherever you are — even without internet.</p>
+<div class="row" style="justify-content:center"><button class="btn" id="start">Start Learning</button><a class="btn sec" href="#how">See How It Works</a></div></section>
+<section class="card" aria-label="Dashboard preview" style="max-width:520px;margin:0 auto 24px"><b>Ready to learn?</b><div class="stats" style="margin:10px 0 0"><div class="card stat"><b>6</b><small>Available</small></div><div class="card stat"><b>2</b><small>Saved</small></div><div class="card stat"><b>40 KB</b><small>Used</small></div></div><p class="muted" style="margin:8px 0 0;text-align:center">Preview</p></section>
+<section id="how" class="steps"><h2>How CampusLite works</h2><div class="grid">
+<div class="card"><svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true"><circle cx="20" cy="20" r="12" fill="none" stroke="#2563EB" stroke-width="4"/><path d="M29 29l12 12" stroke="#2563EB" stroke-width="4" stroke-linecap="round"/></svg><p><b class="n">01</b> <b>Find Your Materials</b></p><p class="muted">Browse notes, tutorials, and essential academic information.</p></div>
+<div class="card"><svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6v26m-10-10l10 10 10-10M8 42h32" fill="none" stroke="#2563EB" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg><p><b class="n">02</b> <b>Save for Offline</b></p><p class="muted">Download the resources you need when you're connected.</p></div>
+<div class="card"><svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 14h16a4 4 0 014 4v24a4 4 0 00-4-4H6zM42 14H26v28a4 4 0 014-4h12z" fill="none" stroke="#2563EB" stroke-width="3" stroke-linejoin="round"/></svg><p><b class="n">03</b> <b>Learn Anywhere</b></p><p class="muted">Open your saved resources even when you have no internet.</p></div></div></section>`;
+V.dashboard=()=>{const rc=ls.get("recent",[]).map(id=>N.find(n=>n.id===id)).filter(Boolean);
+return `${ls.get("tip",true)?'<div class="tip row" role="note"><span>Welcome to CampusLite! Start by saving a resource for offline learning.</span><button class="btn sm" id="gotit">Got it</button></div>':""}
+<h1>Ready to learn?</h1><p class="muted">Everything you need to keep studying, online or offline.</p>
+<div class="row"><a class="btn" href="#/resources">📚 Browse Resources</a><a class="btn sec" href="#/downloads">⬇️ My Downloads</a><a class="btn sec" href="#/demo">Try CampusLite Offline</a></div>${stats()}
+<h2>Continue learning</h2>${rc.length?`<div class="grid">${rc.map(n=>`<a class="card" style="text-decoration:none;color:inherit" href="#/read/${n.id}"><span class="ic">${n.ic}</span><h3>${esc(n.t)}</h3><span class="muted">Open again →</span></a>`).join("")}</div>`:'<div class="card empty">Nothing opened yet. Pick a resource to get started.</div>'}
+<h2 style="margin-top:20px">Recommended</h2><div class="grid">${N.slice(0,3).map(card).join("")}</div>`};
+V.resources=()=>`<h1>Resource Library</h1><label class="sr" for="q">Search</label><input type="search" id="q" placeholder="Search notes, subjects, or topics…" autocomplete="off"><div class="chips" id="chips" role="group" aria-label="Categories">${CATS.map((c,i)=>`<button class="chip" aria-pressed="${i==0}" data-cat="${c}">${c}</button>`).join("")}</div><div id="list" class="grid"></div>`;
+function fillList(){const q=($("#q").value||"").toLowerCase(),c=$("#chips .chip[aria-pressed=true]").dataset.cat;
+const r=N.filter(n=>(c==="All"||n.cat===c)&&(n.t+n.d+n.cat).toLowerCase().includes(q));$("#list").innerHTML=r.length?r.map(card).join(""):'<div class="card empty" style="grid-column:1/-1">No matches. Try a different word or choose All.</div>'}
+V.downloads=()=>{const t=S.saved.length+S.files.length;return `<h1>My Downloads</h1><p class="muted">${t} saved on this device</p>
+<input type="search" id="dq" placeholder="Search your downloads…" aria-label="Search your downloads"><div id="dl" style="margin-top:14px"></div><div id="est" class="muted"></div>
+<h2 style="margin-top:24px">Add your own materials</h2><div class="card"><label for="up">Choose a PDF or TXT file</label><br><input type="file" id="up" accept=".pdf,.txt,application/pdf,text/plain" style="margin:8px 0;width:100%"><div id="upinfo" class="muted"></div><p class="muted" style="margin:8px 0 0">Files saved here remain on this device and may be lost if browser data is cleared.</p></div>`};
+function fillDl(){const q=($("#dq").value||"").toLowerCase();
+const a=S.saved.filter(x=>x.note.t.toLowerCase().includes(q)).map(x=>`<article class="card"><span class="ic">${x.note.ic}</span> <h3 style="display:inline">${esc(x.note.t)}</h3><p class="muted">${x.note.type} · ${fmt(x.size)}</p><div class="row"><a class="btn sm" href="#/read/${x.id}">Open</a><button class="btn sm dng" data-rm="saved:${x.id}">Remove</button></div></article>`);
+const f=S.files.filter(x=>x.name.toLowerCase().includes(q)).map(x=>`<article class="card"><span class="ic">📄</span> <h3 style="display:inline">${esc(x.name)}</h3><p class="muted">Your file · ${fmt(x.blob.size)}</p><div class="row"><a class="btn sm" href="#/file/${x.id}">Open</a><button class="btn sm dng" data-rm="files:${x.id}">Remove</button></div></article>`);
+const all=a.concat(f);$("#dl").innerHTML=all.length?`<div class="grid">${all.join("")}</div>`:(S.saved.length+S.files.length?'<div class="card empty">No matches in your downloads.</div>':'<div class="card empty"><h2>Your offline library is empty.</h2><p>Save a few study materials so you can access them without internet.</p><a class="btn" href="#/resources">Explore Resources</a></div>');
+if(navigator.storage&&navigator.storage.estimate)navigator.storage.estimate().then(e=>{$("#est")&&($("#est").textContent=`Device storage: ${fmt(e.usage||0)} used of about ${fmt(e.quota||0)} available to this browser.`)})}
+async function upload(file){const info=$("#upinfo");if(!file)return;const ok=/\.(pdf|txt)$/i.test(file.name);
+if(!ok){info.textContent="That file type isn't supported. Please choose a PDF or TXT file.";return}
+info.textContent=`${file.name} · ${fmt(file.size)}`;
+try{if(navigator.storage&&navigator.storage.estimate){const e=await navigator.storage.estimate();if(e.quota&&file.size>e.quota-e.usage)return info.textContent="Your device is running low on storage. This file is too large."}
+const type=/\.pdf$/i.test(file.name)?"application/pdf":"text/plain";
+await tx("files","readwrite",s=>s.put({id:"f"+Date.now(),name:file.name,type,blob:file.slice(0,file.size,type)}));await load();toast("Saved! You can now read this offline.");route()}
+catch(e){info.textContent=quotaMsg(e)}}
+let objURL;
+V.read=id=>{const s=S.saved.find(x=>x.id===id),n=s?s.note:N.find(x=>x.id===id);if(!n)return V.missing();
+if(!s&&!S.online)return V.missing();recent(id);
+const body=n.b.map(([k,v])=>k==="h"?`<h2>${esc(v)}</h2>`:k==="p"?`<p>${esc(v)}</p>`:k==="c"?`<pre><code>${esc(v)}</code></pre>`:`<div class="q">✏️ ${esc(v)}</div>`).join("");
+return `<div class="row"><a class="btn sec sm" href="#/resources">← Back</a><button class="btn sec sm" data-fs="1" aria-label="Increase text size">A+</button><button class="btn sec sm" data-fs="-1" aria-label="Decrease text size">A−</button><button class="btn sec sm" id="dk" aria-pressed="${document.body.classList.contains("dark")}">🌙 Reading mode</button></div>
+<div class="reader"><h1>${esc(n.t)}</h1><p><span class="badge">${n.cat}</span> ${s?'<span class="badge ok">✔ Available Offline</span>':'<button class="btn sm" data-save="'+n.id+'">Save for Offline</button>'}</p>${body}</div>`};
+V.missing=()=>`<div class="card empty"><h2>This resource isn't saved yet.</h2><p>Connect to the internet to make it available offline.</p><a class="btn" href="#/downloads">Go to My Downloads</a></div>`;
+V.file=async id=>{const f=S.files.find(x=>x.id===id);if(!f)return V.missing();
+let h=`<div class="row"><a class="btn sec sm" href="#/downloads">← Back</a></div><h1>${esc(f.name)}</h1>`;
+if(f.type==="text/plain"){try{h+=`<pre class="card" style="white-space:pre-wrap">${esc(await f.blob.text())}</pre>`}catch{h+="<p>We couldn't read this file. Try uploading it again.</p>"}}
+else{if(objURL)URL.revokeObjectURL(objURL);objURL=URL.createObjectURL(f.blob);h+=`<iframe src="${objURL}" title="${esc(f.name)}" style="width:100%;height:70vh;border:1px solid var(--bd);border-radius:10px"></iframe><p><a class="btn sec" href="${objURL}" target="_blank" rel="noopener">Open in a new tab</a> <a class="btn sec" href="${objURL}" download="${esc(f.name)}">Download</a></p><p class="muted">If the PDF doesn't appear, use the buttons above.</p>`}
+return h};
+const CT=[["Student Support","Add contact details here"],["Library Services","Add contact details here"],["IT Assistance","Add contact details here"]];
+V.campus=()=>{const c=ls.get("contacts",CT);return `<h1>Campus Hub</h1><p class="muted">Sample information. Replace it with your own campus details.</p>
+<div class="grid"><section class="card"><h2>📢 Announcements</h2><p><span class="badge">Sample</span> Library opens late during exam week.</p><p><span class="badge">Sample</span> Registration closes Friday.</p></section>
+<section class="card"><h2>💡 Study tips</h2><ul>${TIPS.map(t=>`<li>${t}</li>`).join("")}</ul></section></div>
+<section class="card" style="margin-top:14px"><h2>🗓️ Weekly timetable <span class="badge">Sample</span></h2><div class="tbl"><table><tr><th>Day</th><th>Morning</th><th>Afternoon</th></tr><tr><td>Mon</td><td>Programming</td><td>Mathematics</td></tr><tr><td>Tue</td><td>Computer Systems</td><td>Lab</td></tr><tr><td>Wed</td><td>Databases</td><td>Business Comm.</td></tr><tr><td>Thu</td><td>Web Dev</td><td>Study group</td></tr><tr><td>Fri</td><td>Mathematics</td><td>Free</td></tr></table></div></section>
+<section class="card" style="margin-top:14px"><h2>📞 Important contacts</h2>${c.map((x,i)=>`<div class="row" style="margin-bottom:8px"><b style="min-width:140px">${esc(x[0])}</b><input type="text" data-ct="${i}" value="${esc(x[1])}" aria-label="${esc(x[0])} details" style="flex:1;min-width:160px"></div>`).join("")}<p class="muted">Edits are saved on this device.</p></section>
+<button class="btn" id="svcampus" style="margin-top:14px">Save campus info for offline</button>`};
+V.settings=()=>`<h1>Settings</h1><section class="card"><h2>Data Saver Mode</h2><label class="row"><input type="checkbox" id="ds" ${ls.get("saver",false)?"checked":""} style="width:24px;height:24px"> <b>${ls.get("saver",false)?"ON":"OFF"}</b></label><p class="muted" style="margin-top:8px">Data Saver helps CampusLite use less internet data by keeping the experience lightweight.</p></section>
+<section class="card" style="margin-top:14px"><h2>Text size</h2><div class="row"><button class="btn sec" data-fs="-1">A−</button><button class="btn sec" data-fs="1">A+</button></div></section>
+<section class="card" style="margin-top:14px"><h2>Install</h2><div id="inst"><p class="muted">${S.ev?"":"Install isn't available here. You can keep using CampusLite in your browser."}</p></div>${S.ev?'<button class="btn" id="ib">Install CampusLite</button>':""}</section>`;
+V.demo=()=>`<h1>Try CampusLite Offline</h1><ol class="steps" style="padding-left:20px"><li><p>Open the Resource Library. <a class="btn sm" href="#/resources">Browse Resources</a></p></li><li><p>Save a study note to your device.</p></li><li><p>Turn off Wi-Fi and mobile data yourself, then reload.</p></li><li><p>Open your saved note from My Downloads. <a class="btn sm sec" href="#/downloads">My Downloads</a></p></li></ol>
+<button class="btn" id="chk">Check Offline Readiness</button><div id="rd" class="card" style="margin-top:14px" aria-live="polite">Press the button to test.</div>`;
+async function readiness(){const r=[];let shell=false;try{shell=!!(window.caches&&(await caches.match("index.html")||await caches.match("./")))}catch{}
+r.push([shell,"App files are cached","Load this page once online and wait a few seconds, then check again."]);
+r.push([!!(navigator.serviceWorker&&navigator.serviceWorker.controller),"Offline helper is active","Reload the page once (needs HTTPS or localhost)."]);
+r.push([S.idb,"Device storage works","Your browser may block storage (private mode?)."]);
+r.push([N.length>=6,"Sample notes are available",""]);r.push([S.saved.length>0,"At least one note is saved","Save a note from Resources first."]);
+$("#rd").innerHTML=r.map(x=>`<p>${x[0]?"✔ Ready":"✖ Not ready"} — ${x[1]}${x[0]?"":". "+x[2]}</p>`).join("")+`<p><b>${r.every(x=>x[0])?"All set. You can go offline now.":"Fix the items above, then check again."}</b></p>`}
+
+/* ---------- router ---------- */
+async function route(){const h=location.hash.replace(/^#\/?/,"")||(ls.get("seen",false)?"dashboard":"welcome");const [p,id]=h.split("/");
+if(h==="how"||p==="how")return $("#how")&&$("#how").scrollIntoView();
+const app=$("#app");if(!V[p]){location.hash="#/dashboard";return}
+if(p==="welcome")$("#nav").hidden=true;else $("#nav").hidden=false;
+$("#nav").innerHTML=NAV.map(([k,i,l])=>`<a href="#/${k}" ${k===p||(p==="read"&&k==="resources")||(p==="file"&&k==="downloads")?'aria-current="page"':""}><span aria-hidden="true">${i}</span>${l}</a>`).join("");
+app.innerHTML=await V[p](id);document.title=`${p[0].toUpperCase()+p.slice(1)} – CampusLite`;
+if(p==="resources")fillList();if(p==="downloads")fillDl();window.scrollTo(0,0);}
+addEventListener("hashchange",route);
+document.addEventListener("click",e=>{const t=e.target.closest("button,a");if(!t)return;
+if(t.dataset.save)saveNote(t.dataset.save);
+if(t.dataset.rm){const [s,id]=t.dataset.rm.split(":");removeItem(s,id)}
+if(t.dataset.cat){$$("#chips .chip").forEach(c=>c.setAttribute("aria-pressed",c===t));fillList()}
+if(t.dataset.fs){const f=Math.min(26,Math.max(14,ls.get("fs",16)+ +t.dataset.fs*2));ls.set("fs",f);applyPrefs()}
+if(t.id==="start"){ls.set("seen",true);location.hash="#/dashboard"}
+if(t.id==="gotit"){ls.set("tip",false);route()}
+if(t.id==="dk"){const d=document.body.classList.toggle("dark");ls.set("dark",d);t.setAttribute("aria-pressed",d)}
+if(t.id==="chk")readiness();
+if(t.id==="ib"&&S.ev){S.ev.prompt();S.ev=null}
+if(t.id==="svcampus")tx("kv","readwrite",s=>s.put({contacts:ls.get("contacts",CT),tips:TIPS,at:Date.now()},"campus")).then(()=>toast("Saved! Campus info is available offline.")).catch(x=>toast(quotaMsg(x)))});
+document.addEventListener("input",e=>{const t=e.target;if(t.id==="q")fillList();if(t.id==="dq")fillDl();if(t.dataset.ct){const c=ls.get("contacts",CT);c[t.dataset.ct][1]=t.value;ls.set("contacts",c)}});
+document.addEventListener("change",e=>{if(e.target.id==="up")upload(e.target.files[0]);if(e.target.id==="ds"){ls.set("saver",e.target.checked);applyPrefs();toast(e.target.checked?"Data Saver is on.":"Data Saver is off.");route()}});
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();S.ev=e;if(location.hash.includes("settings"))route()});
+
+/* ---------- prefs, connectivity, service worker ---------- */
+function applyPrefs(){document.documentElement.style.setProperty("--fs",ls.get("fs",16)+"px");document.body.classList.toggle("saver",!!ls.get("saver",false));document.body.classList.toggle("dark",!!ls.get("dark",false))}
+async function ping(){if(!navigator.onLine)return false;if(ls.get("saver",false))return true;try{const r=await fetch("manifest.json",{method:"HEAD",cache:"no-store"});return r.ok}catch{return false}}
+async function setStatus(){const was=S.online;S.online=await ping();const s=$("#status");s.className="status "+(S.online?"on":"off");s.textContent=S.online?"● Online":"○ Offline";
+if(was!==S.online)toast(S.online?"You're back online.":"You're offline. Your saved resources are still available.")}
+addEventListener("online",setStatus);addEventListener("offline",setStatus);
+(async()=>{applyPrefs();
+try{DB=await openDB();await load()}catch{S.idb=false;toast("Saving isn't available in this browser, so offline saving is turned off.")}
+if("serviceWorker"in navigator){navigator.serviceWorker.register("sw.js").then(r=>{if(!ls.get("saver",false))r.update().catch(()=>{})}).catch(()=>toast("Offline mode couldn't start. Open CampusLite over HTTPS to enable it."))}
+await setStatus();route()})();
+</script>
+</body>
+</html>
